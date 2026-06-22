@@ -1,4 +1,4 @@
-// Portfolio JavaScript - Abina Abey
+// Portfolio JavaScript - STMB
 // Features: Loader, Cursor, Theme, Typing, Animations, Particles, Modal, Filter, Form
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <ul class="modal-features">
                         ${project.features.map(f => `<li>${f}</li>`).join('')}
                     </ul>
-                    <a href="https://github.com/abinaabey2006" target="_blank" class="btn btn-primary">
+                    <a href="https://github.com/SThirumalaMurthyBabu" target="_blank" class="btn btn-primary">
                         <i class="fab fa-github"></i> View on GitHub
                     </a>
                 `;
@@ -440,75 +440,125 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ===== GITHUB CONTRIBUTION GRAPH =====
-    const contributionGrid = document.getElementById('contribution-grid');
-    const weeks = 52;
-    const days = 7;
+const contributionGrid =
+document.getElementById('contribution-grid');
 
-    for (let w = 0; w < weeks; w++) {
-        for (let d = 0; d < days; d++) {
-            const cell = document.createElement('div');
-            cell.className = 'contribution-cell';
+if (contributionGrid) {
 
-            // Generate realistic-looking pattern
-            const rand = Math.random();
-            let level = 0;
-            if (rand > 0.6) level = 1;
-            if (rand > 0.75) level = 2;
-            if (rand > 0.85) level = 3;
-            if (rand > 0.92) level = 4;
+const weeks = 52;
+const days = 7;
 
-            // Make recent weeks more active
-            if (w > 40 && rand > 0.3) level = Math.min(level + 1, 4);
+for (let w = 0; w < weeks; w++) {
 
-            if (level > 0) {
-                cell.classList.add(`level-${level}`);
-            }
+    for (let d = 0; d < days; d++) {
 
-            cell.title = `${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d]}, Week ${w + 1}`;
-            contributionGrid.appendChild(cell);
+        const cell =
+        document.createElement('div');
+
+        cell.className =
+        'contribution-cell';
+
+        const rand =
+        Math.random();
+
+        let level = 0;
+
+        if (rand > 0.6) level = 1;
+        if (rand > 0.75) level = 2;
+        if (rand > 0.85) level = 3;
+        if (rand > 0.92) level = 4;
+
+        if (w > 40 && rand > 0.3)
+            level = Math.min(level + 1, 4);
+
+        if (level > 0) {
+            cell.classList.add(
+                `level-${level}`
+            );
         }
+
+        contributionGrid.appendChild(cell);
     }
+}
 
-    // ===== BACK TO TOP =====
-    const backToTop = document.getElementById('back-to-top');
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            backToTop.classList.add('visible');
-        } else {
-            backToTop.classList.remove('visible');
-        }
-    });
-
-    backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
+}
     // ===== CONTACT FORM =====
-    const contactForm = document.getElementById('contact-form');
 
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+emailjs.init("4b2eSit6raCSCTn2a");
 
-        const btn = contactForm.querySelector('button[type="submit"]');
-        const originalText = btn.innerHTML;
+const contactForm =
+document.getElementById("contact-form");
 
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        btn.disabled = true;
+if(contactForm){
 
-        // Simulate sending (replace with actual backend integration)
+contactForm.addEventListener(
+"submit",
+function(e){
+    e.preventDefault();
+
+    const btn = contactForm.querySelector(
+        'button[type="submit"]'
+    );
+
+    const originalText = btn.innerHTML;
+
+    btn.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+    btn.disabled = true;
+
+    emailjs.send(
+        "service_tg1xrdc",
+        "template_499kd6a",
+        {
+            name:
+                document.getElementById("name").value,
+
+            email:
+                document.getElementById("email").value,
+
+            subject:
+                document.getElementById("subject").value,
+
+            message:
+                document.getElementById("message").value
+        }
+    )
+
+    .then(() => {
+
+        btn.innerHTML =
+            '<i class="fas fa-check"></i> Message Sent!';
+
+        contactForm.reset();
+
+    })
+
+    .catch((err) => {
+
+        console.log(err);
+
+        btn.innerHTML =
+            'Failed to Send';
+
+    })
+
+    .finally(() => {
+
         setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
 
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = '';
-                btn.disabled = false;
-                contactForm.reset();
-            }, 3000);
-        }, 1500);
+            btn.innerHTML =
+                originalText;
+
+            btn.disabled =
+                false;
+
+        }, 3000);
+
     });
+
+});
+}
 
     // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
